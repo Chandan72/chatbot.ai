@@ -4,7 +4,7 @@ import google.generativeai as genai
 import threading
 import os
 
-API_KEY = os.getenv('GEMINI_API_KEY') # Put your Perplexity API key here
+API_KEY = os.getenv('GEMINI_API_KEY') 
 genai.configure(api_key=API_KEY)
 MODEL="gemini-2.5-flash"
 
