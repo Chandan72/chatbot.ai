@@ -7,14 +7,23 @@ import os
 API_KEY = os.getenv('GEMINI_API_KEY') 
 genai.configure(api_key=API_KEY)
 MODEL="gemini-2.5-flash"
+SYSTEM_INSTRUCTIONS = "You are a friendly assistant. you only give response which is AI related topics, keep your responses clear and encouraging."
+
+
+
 
 def ask_gemini(question):
     try:
+        # Combine system instructions and user question for Gemini API
+        prompt = f"{SYSTEM_INSTRUCTIONS}\nUser: {question}"
         model = genai.GenerativeModel(MODEL)
-        response = model.generate_content(question)
+        response = model.generate_content(prompt)
         return response.text
     except Exception as e:
         return f"Error: {e}"
+    
+    
+
     """payload = {
         "model": "sonar-medium-chat",  # Choose the model you want
         "messages": [
@@ -62,6 +71,8 @@ entry.grid(row=1, column=0, padx=10, pady=(0,10))
 
 send_button = tk.Button(root, text="Send", command=send_message, font=("Arial", 12))
 send_button.grid(row=1, column=1, padx=10, pady=(0,10))
+delete_button = tk.Button(root, text="Delete", command=lambda: chat_window.delete(1.0, tk.END), font=("Arial", 12))
+delete_button.grid(row=1, column=2, padx=10, pady=(0,10))
 
 root.bind('<Return>', lambda event: send_message())  # Enter key to send
 
